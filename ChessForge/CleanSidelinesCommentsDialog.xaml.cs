@@ -51,23 +51,56 @@ namespace ChessForge
         public CleanSidelinesCommentsDialog()
         {
             InitializeComponent();
-            UiCbAnnotator.Content = Properties.Resources.Annotator + " / " + Properties.Resources.Author; 
-
-            UiCbStudy.IsChecked = true;
-            UiCbGames.IsChecked = false;
-            UiCbExercises.IsChecked = false;
-
+            UiCbAnnotator.Content = Properties.Resources.Annotator + " / " + Properties.Resources.Author;
             UiCbStudy.Visibility = Visibility.Visible;
+
+            // Set the "Apply to" check boxes according to the current configuration
+            UiCbStudy.IsChecked = Configuration.CleanupApplyToStudies;
+            UiCbGames.IsChecked = Configuration.CleanupApplyToGames;
+            UiCbExercises.IsChecked = Configuration.CleanupApplyToExercises;
+
+
+            // Set the radio buttons according to the current configuration
+            Scope = Configuration.CleanupScope;
+
+            // if there is no active variation tree, then the "Current Item" option is not available.
             if (AppState.MainWin.ActiveVariationTree == null)
             {
-                UiRbCurrentChapter.IsChecked = true;
+                UiRbCurrentItem.IsChecked = false;
+
+                // check the "Current Chapter" radio button if the scope is not "Workbook"
+                UiRbWorkbook.IsChecked = (Scope == OperationScope.WORKBOOK);
+                if (Scope != OperationScope.WORKBOOK)
+                {
+                    UiRbCurrentChapter.IsChecked = true;
+                }
             }
             else
             {
-                UiRbCurrentItem.IsChecked = true;
+                // check the "Current Item" radio button if the scope is not "Chapter" or "Workbook"
+                UiRbWorkbook.IsChecked = (Scope == OperationScope.WORKBOOK);
+                if (Scope != OperationScope.WORKBOOK)
+                {
+                    UiRbCurrentChapter.IsChecked = (Scope == OperationScope.CHAPTER);
+                }
+                if (Scope != OperationScope.WORKBOOK && Scope != OperationScope.CHAPTER)
+                {
+                    UiRbCurrentItem.IsChecked = true;
+                }
             }
 
-            Scope = OperationScope.NONE;
+            // Set the "Attributes" check boxes according to the current configuration
+            int moveAttrsFlags = Configuration.CleanupMoveAttrs;
+            int articleAttrsFlags = Configuration.CleanupArticleAttrs;
+
+            UiCbComments.IsChecked = (moveAttrsFlags & (int)MoveAttribute.COMMENT_AND_NAGS) != 0;
+            UiCbEngineEvals.IsChecked = (moveAttrsFlags & (int)MoveAttribute.ENGINE_EVALUATION) != 0;
+            UiCbBadMoveDetection.IsChecked = (moveAttrsFlags & (int)MoveAttribute.BAD_MOVE_ASSESSMENT) != 0;
+            UiCbSideLines.IsChecked = (moveAttrsFlags & (int)MoveAttribute.SIDELINE) != 0;
+            UiCbReferences.IsChecked = (moveAttrsFlags & (int)MoveAttribute.REFERENCE) != 0;
+            UiCbDiagrams.IsChecked = (moveAttrsFlags & (int)MoveAttribute.DIAGRAM) != 0;
+
+            UiCbAnnotator.IsChecked = (articleAttrsFlags & (int)ArticleAttribute.ANNOTATOR) != 0;
         }
 
         /// <summary>
@@ -77,9 +110,6 @@ namespace ChessForge
         /// <param name="itemType"></param>
         private void ShowItemType(GameData.ContentType itemType, bool enabled)
         {
-            UiCbGames.IsChecked = false;
-            UiCbExercises.IsChecked = false;
-
             CheckBox cb = null;
             switch (itemType)
             {
@@ -104,7 +134,7 @@ namespace ChessForge
 
         /// <summary>
         /// Enables all itmes, shows or hides them,
-        /// sets singular or plural lable for games/exercises.
+        /// sets singular or plural labels for games/exercises.
         /// </summary>
         /// <param name="showHide"></param>
         /// <param name="plural"></param>
@@ -128,9 +158,9 @@ namespace ChessForge
         /// <param name="isChecked"></param>
         private void CheckAll(bool isChecked)
         {
-            UiCbStudy.IsChecked = isChecked;
-            UiCbGames.IsChecked = isChecked;
-            UiCbExercises.IsChecked = isChecked;
+            UiCbStudy.IsChecked = isChecked && Configuration.CleanupApplyToStudies;
+            UiCbGames.IsChecked = isChecked && Configuration.CleanupApplyToGames;
+            UiCbExercises.IsChecked = isChecked && Configuration.CleanupApplyToExercises;
         }
 
 
@@ -219,27 +249,20 @@ namespace ChessForge
             {
                 Scope = OperationScope.WORKBOOK;
             }
+            Configuration.CleanupScope = Scope;
 
-            if (UiCbStudy.IsChecked == true)
-            {
-                ApplyToStudies = true;
-            }
-            if (UiCbGames.IsChecked == true)
-            {
-                ApplyToGames = true;
-            }
-            if (UiCbExercises.IsChecked == true)
-            {
-                ApplyToExercises = true;
-            }
+            ApplyToStudies = UiCbStudy.IsChecked == true;
+            Configuration.CleanupApplyToStudies = UiCbStudy.IsChecked == true;
+
+            ApplyToGames = UiCbGames.IsChecked == true;
+            Configuration.CleanupApplyToGames = UiCbGames.IsChecked == true;
+            
+            ApplyToExercises = UiCbExercises.IsChecked == true;
+            Configuration.CleanupApplyToExercises = UiCbExercises.IsChecked == true;
 
             if (UiCbComments.IsChecked == true)
             {
                 MoveAttrsFlags |= (int)MoveAttribute.COMMENT_AND_NAGS;
-            }
-            if (UiCbAnnotator.IsChecked == true)
-            {
-                ArticleAttrsFlags |= (int)ArticleAttribute.ANNOTATOR;
             }
             if (UiCbEngineEvals.IsChecked == true)
             {
@@ -261,6 +284,14 @@ namespace ChessForge
             {
                 MoveAttrsFlags |= (int)MoveAttribute.DIAGRAM;
             }
+
+            if (UiCbAnnotator.IsChecked == true)
+            {
+                ArticleAttrsFlags |= (int)ArticleAttribute.ANNOTATOR;
+            }
+
+            Configuration.CleanupMoveAttrs = MoveAttrsFlags;
+            Configuration.CleanupArticleAttrs = ArticleAttrsFlags;
 
             DialogResult = true;
         }
