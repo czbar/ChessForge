@@ -3217,6 +3217,14 @@ FlMsgNumberOfChaptersCreated=
 #english: FlMsgVariantGamesSkipped=Chess variant games skipped (count=$0)
 FlMsgVariantGamesSkipped=
 
+#description: Flash message: cleanup notes and lines completed
+#english: FlMsgCleanupCompleted=Cleanup completed.
+FlMsgCleanupCompleted=
+
+#description: Flash message: no notes or lines to cleanup
+#english: FlMsgCleanupNothingDone=Found nothing to delete.
+FlMsgCleanupNothingDone=
+
 ##################################
 #
 # Header: MESSAGES

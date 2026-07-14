@@ -3217,6 +3217,14 @@ FlMsgNumberOfChaptersCreated=Liczba nowych rozdziałów
 #english: FlMsgVariantGamesSkipped=Chess variant games skipped (count=$0)
 FlMsgVariantGamesSkipped=Pominięto partie szachów niestandardowych (liczba
 
+#description: Flash message: cleanup notes and lines completed
+#english: FlMsgCleanupCompleted=Cleanup completed.
+FlMsgCleanupCompleted=Czyszczenie zakończone.
+
+#description: Flash message: no notes or lines to cleanup
+#english: FlMsgCleanupNothingDone=Found nothing to delete.
+FlMsgCleanupNothingDone=Nie znaleziono nic do wyczyszczenia.
+
 ##################################
 #
 # Header: MESSAGES

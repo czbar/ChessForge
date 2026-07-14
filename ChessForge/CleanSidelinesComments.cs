@@ -15,9 +15,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public static void CleanLinesAndComments(OperationScope scope, int moveAttrsFlags, int articleAttrsFlags,
+        public static bool CleanLinesAndComments(OperationScope scope, int moveAttrsFlags, int articleAttrsFlags,
                                                  bool applyToStudies, bool applyToGames, bool applyToExercises)
         {
+            bool anythingDeleted = false;
+
             try
             {
                 Dictionary<Article, List<MoveAttributes>> dictUndoMoveAttrs = new Dictionary<Article, List<MoveAttributes>>();
@@ -69,7 +71,12 @@ namespace ChessForge
                     WorkbookOperation op = new WorkbookOperation(wot, dictUndoMoveAttrs, lstUndoArticlesAttrs);
                     AppState.Workbook.OpsManager.PushOperation(op);
 
+                    anythingDeleted = true;
                     AppState.IsDirty = true;
+                }
+                else
+                {
+                    anythingDeleted = false;
                 }
 
                 AppState.MainWin.ActiveTreeView.RestoreSelectedLineAndNode();
@@ -78,6 +85,8 @@ namespace ChessForge
             {
                 AppLog.Message("CleanLinesAndComments()", ex);
             }
+
+            return anythingDeleted;
         }
 
         /// <summary>

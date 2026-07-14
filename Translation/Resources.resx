@@ -2215,6 +2215,12 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   <data name="FlMsgVariantGamesSkipped" xml:space="preserve">
     <value>Chess variant games skipped (count=$0)</value>
   </data>
+  <data name="FlMsgCleanupCompleted" xml:space="preserve">
+    <value>Cleanup completed.</value>
+  </data>
+  <data name="FlMsgCleanupNothingDone" xml:space="preserve">
+    <value>Found nothing to delete.</value>
+  </data>
   <data name="MsgBadAuthorizationToken" xml:space="preserve">
     <value>Bad Authorization Token</value>
   </data>

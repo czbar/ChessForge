@@ -2518,6 +2518,12 @@ FlMsgNumberOfChaptersCreated=Number of New Chapters
 #Flash message: variant games skipped
 FlMsgVariantGamesSkipped=Chess variant games skipped (count=$0)
 
+#Flash message: cleanup notes and lines completed
+FlMsgCleanupCompleted=Cleanup completed.
+
+#Flash message: no notes or lines to cleanup
+FlMsgCleanupNothingDone=Found nothing to delete.
+
 ##################################
 #
 # Header: MESSAGES

@@ -33,3 +33,5 @@ Double click on c5 after 1.d4 in the Study, removes select background, leaving t
 Double space before the closing parenthesis in export.
 
 Exercises: Persist board orientation after the user changes it via CTRL+F.
+
+FlashMessage when Cleanup finished.
