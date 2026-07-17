@@ -1808,7 +1808,7 @@ namespace ChessForge
                             para2 = para;
                             if (i == 1)
                             {
-                                para2.Inlines.Add(new Run(" ( "));
+                                para2.Inlines.Add(new Run("( "));
                                 _isIntraFork = true;
                             }
                         }
@@ -1829,7 +1829,7 @@ namespace ChessForge
                             {
                                 if (_isIntraFork)
                                 {
-                                    para.Inlines.Add(new Run(" ) "));
+                                    para.Inlines.Add(new Run(") "));
                                 }
                                 _isIntraFork = false;
                             }
