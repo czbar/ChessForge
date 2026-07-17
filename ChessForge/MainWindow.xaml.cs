@@ -3129,7 +3129,7 @@ namespace ChessForge
 
             bool changed = false;
 
-            if (nd != null && nd.NodeId != 0)
+            if (nd != null)
             {
                 EditOperation op = null;
 
