@@ -1962,6 +1962,7 @@ namespace ChessForge
             if (nd != null)
             {
                 Run r = AddRunToParagraph(nd, para, "", Brushes.White);
+                AddCommentBeforeMoveRunsToParagraph(nd, para, true, out bool _);
                 AddCommentRunsToParagraph(nd, para, out bool isBlunder, out _);
                 if (isBlunder)
                 {
