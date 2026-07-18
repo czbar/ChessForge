@@ -30,8 +30,6 @@ Reordering lines in a game on a move with multi-comment has a strange effect (se
 
 Double click on c5 after 1.d4 in the Study, removes select background, leaving the move white on yellow. 
 
-Double space before the closing parenthesis in export.
+Ability to create an Exercise from a game with no moves.
 
-Exercises: Persist board orientation after the user changes it via CTRL+F.
-
-FlashMessage when Cleanup finished.
+Cannot remove e.p. when setting up position.
