@@ -410,8 +410,16 @@ namespace ChessForge
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
             if (InvokeAnnotationsDialog(nd))
             {
-                ActiveTreeView.InsertOrUpdateCommentRun(nd);
-                ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(nd);
+                if (nd.NodeId == 0)
+                {
+                    // the move's paragraph may have been removed (due to being empty)
+                    ActiveTreeView.BuildFlowDocumentForVariationTree(false);
+                }
+                else
+                {
+                    ActiveTreeView.InsertOrUpdateCommentRun(nd);
+                    ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(nd);
+                }
             }
         }
 
