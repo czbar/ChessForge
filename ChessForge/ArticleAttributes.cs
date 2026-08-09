@@ -14,6 +14,7 @@
         {
             Guid = article.Guid;
             Annotator = article.Tree.Header.GetAnnotator();
+            Preamble = article.Tree.Header.BuildPreambleText();
         }
 
         /// <summary>
@@ -25,5 +26,10 @@
         /// Article Annotator/Author.
         /// </summary>
         public string Annotator { get; set; }
+
+        /// <summary>
+        /// Preamble of the article.
+        /// </summary>
+        public string Preamble { get; set; }
     }
 }
