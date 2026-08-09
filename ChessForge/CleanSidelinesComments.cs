@@ -199,6 +199,12 @@ namespace ChessForge
         {
             List<MoveAttributes> attrsList = new List<MoveAttributes>();
 
+            // do not delete SIDELINEs in Studies
+            if (article.ContentType == GameData.ContentType.STUDY_TREE)
+            {
+                attrsFlags &= ~(int)MoveAttribute.SIDELINE;
+            }
+
             attrsList = TreeUtils.BuildMoveAttributesList(article.Tree, (int)attrsFlags);
             if ((attrsFlags & (int)MoveAttribute.COMMENT_AND_NAGS) != 0)
             {
