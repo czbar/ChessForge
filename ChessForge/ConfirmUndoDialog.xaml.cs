@@ -122,15 +122,19 @@ namespace ChessForge
                     case WorkbookOperationType.DELETE_COMMENTS:
                     case WorkbookOperationType.DELETE_ENGINE_EVALS:
                     case WorkbookOperationType.CLEAN_LINES_AND_COMMENTS:
+                        int count = 0;
                         if (_operation.OpData_1 is Dictionary<Article, List<MoveAttributes>> dictUndoData)
                         {
-                            int count = 0;
                             foreach (List<MoveAttributes> lst in dictUndoData.Values)
                             {
                                 count += lst.Count;
                             }
-                            sb.Append("Number of affected moves: " + count.ToString());
                         }
+                        if (_operation.OpData_2 is List<ArticleAttributes> lstArticles)
+                        {
+                            count += lstArticles.Count;
+                        }
+                        sb.Append(Properties.Resources.MsgAffectedItemsNo + ": " + count.ToString());
                         break;
                     default:
                         UiTbDetails.TextWrapping = TextWrapping.Wrap;
