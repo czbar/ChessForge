@@ -95,6 +95,7 @@ namespace ChessPosition
     public enum ArticleAttribute
     {
         ANNOTATOR = 0x01,
+        PREAMBLE = 0x02,
     };
 
     /// <summary>
