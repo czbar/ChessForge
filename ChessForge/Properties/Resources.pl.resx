@@ -2216,10 +2216,13 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
     <value>Pominięto partie szachów niestandardowych (liczba</value>
   </data>
   <data name="FlMsgCleanupCompleted" xml:space="preserve">
-    <value>Czyszczenie zakonczone.</value>
+    <value>Czyszczenie zakończone.</value>
   </data>
   <data name="FlMsgCleanupNothingDone" xml:space="preserve">
     <value>Nie znaleziono nic do wyczyszczenia.</value>
+  </data>
+  <data name="MsgAffectedItemsNo" xml:space="preserve">
+    <value>Liczba zmienionych elementów</value>
   </data>
   <data name="MsgBadAuthorizationToken" xml:space="preserve">
     <value>Niewłaściwy token dostępu</value>

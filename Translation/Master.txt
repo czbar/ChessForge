@@ -2529,6 +2529,9 @@ FlMsgCleanupNothingDone=Found nothing to delete.
 # Header: MESSAGES
 #
 
+#Number of moves and articles affected by Cleanup
+MsgAffectedItemsNo=Number of affected moves/items
+
 #Bad Authorization Token
 MsgBadAuthorizationToken=Bad Authorization Token
 
@@ -2576,7 +2579,6 @@ ErrLibraryDownload=Library Download Error
 
 #Bookmarks already exist
 BookmarksAlreadyExist=Bookmarks already exist
-
 
 #A bookmark has been added
 BookmarkAdded=The bookmark has been added

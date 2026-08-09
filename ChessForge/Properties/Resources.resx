@@ -2221,6 +2221,9 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   <data name="FlMsgCleanupNothingDone" xml:space="preserve">
     <value>Found nothing to delete.</value>
   </data>
+  <data name="MsgAffectedItemsNo" xml:space="preserve">
+    <value>Number of affected moves/items</value>
+  </data>
   <data name="MsgBadAuthorizationToken" xml:space="preserve">
     <value>Bad Authorization Token</value>
   </data>

@@ -5353,6 +5353,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of affected moves/items.
+        /// </summary>
+        public static string MsgAffectedItemsNo {
+            get {
+                return ResourceManager.GetString("MsgAffectedItemsNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bad Authorization Token.
         /// </summary>
         public static string MsgBadAuthorizationToken {

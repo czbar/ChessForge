@@ -3230,6 +3230,10 @@ FlMsgCleanupNothingDone=Nie znaleziono nic do wyczyszczenia.
 # Header: MESSAGES
 #
 
+#description: Number of moves and articles affected by Cleanup
+#english: MsgAffectedItemsNo=Number of affected moves/items
+MsgAffectedItemsNo=Liczba zmienionych elementów
+
 #description: Bad Authorization Token
 #english: MsgBadAuthorizationToken=Bad Authorization Token
 MsgBadAuthorizationToken=Niewłaściwy token dostępu
@@ -3293,7 +3297,6 @@ ErrLibraryDownload=Błąd Pobrania z Biblioteki
 #description: Bookmarks already exist
 #english: BookmarksAlreadyExist=Bookmarks already exist
 BookmarksAlreadyExist=Zakładki już istnieją
-
 
 #description: A bookmark has been added
 #english: BookmarkAdded=The bookmark has been added
