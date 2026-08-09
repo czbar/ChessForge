@@ -8,9 +8,9 @@ Description: Kolekcje partii z książek i fragmenty książek zaadoptowane dla 
     Shelf:
     Description:
 
-	  Book:FIGURY!, autor: Bartosz Soćko
+	  Book:Obrona Królewsko-Indyjska - Wariant Makogonowa, Chess Forge Library (jęz. ang.)
       Description: Kompletny zestaw partii z książki.
-      File: BookSamples/Bartosz Socko - Figury.pgn
+      File: BookSamples/Makogonov Book.pgn
 
 	  Book:Winning, autor: Nigel Short (jęz. ang.)
       Description: Kompletny zestaw partii z książki.
