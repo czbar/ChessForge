@@ -101,6 +101,7 @@ namespace ChessForge
             UiCbDiagrams.IsChecked = (moveAttrsFlags & (int)MoveAttribute.DIAGRAM) != 0;
 
             UiCbAnnotator.IsChecked = (articleAttrsFlags & (int)ArticleAttribute.ANNOTATOR) != 0;
+            UiCbPreamble.IsChecked = (articleAttrsFlags & (int)ArticleAttribute.PREAMBLE) != 0;
         }
 
         /// <summary>
@@ -288,6 +289,11 @@ namespace ChessForge
             if (UiCbAnnotator.IsChecked == true)
             {
                 ArticleAttrsFlags |= (int)ArticleAttribute.ANNOTATOR;
+            }
+
+            if (UiCbPreamble.IsChecked == true)
+            {
+                ArticleAttrsFlags |= (int)ArticleAttribute.PREAMBLE;
             }
 
             Configuration.CleanupMoveAttrs = MoveAttrsFlags;
