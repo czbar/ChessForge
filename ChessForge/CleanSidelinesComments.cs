@@ -263,6 +263,11 @@ namespace ChessForge
                 article.Tree.Header.SetHeaderValue(PgnHeaders.KEY_ANNOTATOR, "");
             }
 
+            if ((attrsFlags & (int)ArticleAttribute.PREAMBLE) != 0)
+            {
+                article.Tree.Header.SetPreamble("");
+            }
+
             return attrs;
         }
 
@@ -276,7 +281,7 @@ namespace ChessForge
         {
             ArticleAttributes articleAttrs = null;
 
-            if ((attrsFlags & (int)ArticleAttribute.ANNOTATOR) != 0)
+            if ((attrsFlags & ((int)ArticleAttribute.ANNOTATOR) | (int)ArticleAttribute.PREAMBLE) != 0)
             {
                 articleAttrs = new ArticleAttributes(article);
             }
