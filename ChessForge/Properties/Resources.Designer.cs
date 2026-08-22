@@ -3670,6 +3670,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cleanup completed..
+        /// </summary>
+        public static string FlMsgCleanupCompleted {
+            get {
+                return ResourceManager.GetString("FlMsgCleanupCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Found nothing to delete..
+        /// </summary>
+        public static string FlMsgCleanupNothingDone {
+            get {
+                return ResourceManager.GetString("FlMsgCleanupNothingDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FEN Copied to Clipboard.
         /// </summary>
         public static string FlMsgCopiedFEN {
@@ -5331,6 +5349,15 @@ namespace ChessForge.Properties {
         public static string MovesInGameMinMax {
             get {
                 return ResourceManager.GetString("MovesInGameMinMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of affected moves/items.
+        /// </summary>
+        public static string MsgAffectedItemsNo {
+            get {
+                return ResourceManager.GetString("MsgAffectedItemsNo", resourceCulture);
             }
         }
         

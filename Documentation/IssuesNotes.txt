@@ -30,4 +30,4 @@ Reordering lines in a game on a move with multi-comment has a strange effect (se
 
 Double click on c5 after 1.d4 in the Study, removes select background, leaving the move white on yellow. 
 
-Double space before the closing parenthesis in export.
+Intermittently, adding a new branch in a game, does something wrong to the view and you can't make the next move.

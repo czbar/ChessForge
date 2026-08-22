@@ -1,5 +1,6 @@
 ﻿using ChessPosition;
 using GameTree;
+using System;
 using System.Collections.Generic;
 
 namespace ChessForge
@@ -14,62 +15,78 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public static void CleanLinesAndComments(OperationScope scope, int moveAttrsFlags, int articleAttrsFlags,
+        public static bool CleanLinesAndComments(OperationScope scope, int moveAttrsFlags, int articleAttrsFlags,
                                                  bool applyToStudies, bool applyToGames, bool applyToExercises)
         {
-            Dictionary<Article, List<MoveAttributes>> dictUndoMoveAttrs = new Dictionary<Article, List<MoveAttributes>>();
-            List<ArticleAttributes> lstUndoArticlesAttrs = new List<ArticleAttributes>();
+            bool anythingDeleted = false;
 
-            if (scope == OperationScope.ACTIVE_ITEM)
+            try
             {
-                if (AppState.MainWin.ActiveTreeView != null && AppState.IsTreeViewTabActive() && AppState.Workbook.ActiveArticle != null)
-                {
-                    List<MoveAttributes> lstMoveAttrs = DeleteMoveAttributesInArticle(AppState.Workbook.ActiveArticle, moveAttrsFlags);
-                    if (lstMoveAttrs.Count > 0)
-                    {
-                        dictUndoMoveAttrs[AppState.Workbook.ActiveArticle] = lstMoveAttrs;
-                    }
+                Dictionary<Article, List<MoveAttributes>> dictUndoMoveAttrs = new Dictionary<Article, List<MoveAttributes>>();
+                List<ArticleAttributes> lstUndoArticlesAttrs = new List<ArticleAttributes>();
 
-                    ArticleAttributes articleAttrs = DeleteArticleAttributes(AppState.Workbook.ActiveArticle, articleAttrsFlags);
-                    if (articleAttrs != null)
+                if (scope == OperationScope.ACTIVE_ITEM)
+                {
+                    if (AppState.MainWin.ActiveTreeView != null && AppState.IsTreeViewTabActive() && AppState.Workbook.ActiveArticle != null)
                     {
-                        lstUndoArticlesAttrs.Add(articleAttrs);
+                        List<MoveAttributes> lstMoveAttrs = DeleteMoveAttributesInArticle(AppState.Workbook.ActiveArticle, moveAttrsFlags);
+                        if (lstMoveAttrs.Count > 0)
+                        {
+                            dictUndoMoveAttrs[AppState.Workbook.ActiveArticle] = lstMoveAttrs;
+                        }
+
+                        ArticleAttributes articleAttrs = DeleteArticleAttributes(AppState.Workbook.ActiveArticle, articleAttrsFlags);
+                        if (articleAttrs != null)
+                        {
+                            lstUndoArticlesAttrs.Add(articleAttrs);
+                        }
                     }
                 }
-            }
-            else if (scope == OperationScope.CHAPTER)
-            {
-                DeleteMoveAttributesInChapter(moveAttrsFlags, AppState.ActiveChapter, applyToStudies, applyToGames, applyToExercises, dictUndoMoveAttrs);
-                DeleteArticleAttributesInChapter(articleAttrsFlags, AppState.ActiveChapter, applyToStudies, applyToGames, applyToExercises, lstUndoArticlesAttrs);
-            }
-            else if (scope == OperationScope.WORKBOOK)
-            {
-                foreach (Chapter chapter in AppState.Workbook.Chapters)
+                else if (scope == OperationScope.CHAPTER)
                 {
-                    DeleteMoveAttributesInChapter(moveAttrsFlags, chapter, applyToStudies, applyToGames, applyToExercises, dictUndoMoveAttrs);
-                    DeleteArticleAttributesInChapter(articleAttrsFlags, chapter, applyToStudies, applyToGames, applyToExercises, lstUndoArticlesAttrs);
+                    DeleteMoveAttributesInChapter(moveAttrsFlags, AppState.ActiveChapter, applyToStudies, applyToGames, applyToExercises, dictUndoMoveAttrs);
+                    DeleteArticleAttributesInChapter(articleAttrsFlags, AppState.ActiveChapter, applyToStudies, applyToGames, applyToExercises, lstUndoArticlesAttrs);
                 }
+                else if (scope == OperationScope.WORKBOOK)
+                {
+                    foreach (Chapter chapter in AppState.Workbook.Chapters)
+                    {
+                        DeleteMoveAttributesInChapter(moveAttrsFlags, chapter, applyToStudies, applyToGames, applyToExercises, dictUndoMoveAttrs);
+                        DeleteArticleAttributesInChapter(articleAttrsFlags, chapter, applyToStudies, applyToGames, applyToExercises, lstUndoArticlesAttrs);
+                    }
+                }
+
+                AppState.MainWin.RebuildAllTreeViews();
+
+                if ((moveAttrsFlags & ((int)MoveAttribute.ENGINE_EVALUATION) | (int)MoveAttribute.BAD_MOVE_ASSESSMENT) != 0)
+                {
+                    // there may have been "assessments" so need to refresh this
+                    AppState.MainWin.ActiveLine.RefreshNodeList(true);
+                }
+
+                if (dictUndoMoveAttrs.Keys.Count > 0 || lstUndoArticlesAttrs.Count > 0)
+                {
+                    WorkbookOperationType wot = WorkbookOperationType.CLEAN_LINES_AND_COMMENTS;
+
+                    WorkbookOperation op = new WorkbookOperation(wot, dictUndoMoveAttrs, lstUndoArticlesAttrs);
+                    AppState.Workbook.OpsManager.PushOperation(op);
+
+                    anythingDeleted = true;
+                    AppState.IsDirty = true;
+                }
+                else
+                {
+                    anythingDeleted = false;
+                }
+
+                AppState.MainWin.ActiveTreeView.RestoreSelectedLineAndNode();
             }
-
-            AppState.MainWin.RebuildAllTreeViews();
-
-            if ((moveAttrsFlags & ((int)MoveAttribute.ENGINE_EVALUATION) | (int)MoveAttribute.BAD_MOVE_ASSESSMENT) != 0)
+            catch (Exception ex)
             {
-                // there may have been "assessments" so need to refresh this
-                AppState.MainWin.ActiveLine.RefreshNodeList(true);
+                AppLog.Message("CleanLinesAndComments()", ex);
             }
 
-            if (dictUndoMoveAttrs.Keys.Count > 0 || lstUndoArticlesAttrs.Count > 0)
-            {
-                WorkbookOperationType wot = WorkbookOperationType.CLEAN_LINES_AND_COMMENTS;
-
-                WorkbookOperation op = new WorkbookOperation(wot, dictUndoMoveAttrs, lstUndoArticlesAttrs);
-                AppState.Workbook.OpsManager.PushOperation(op);
-
-                AppState.IsDirty = true;
-            }
-
-            AppState.MainWin.ActiveTreeView.RestoreSelectedLineAndNode();
+            return anythingDeleted;
         }
 
         /// <summary>
@@ -182,6 +199,12 @@ namespace ChessForge
         {
             List<MoveAttributes> attrsList = new List<MoveAttributes>();
 
+            // do not delete SIDELINEs in Studies
+            if (article.ContentType == GameData.ContentType.STUDY_TREE)
+            {
+                attrsFlags &= ~(int)MoveAttribute.SIDELINE;
+            }
+
             attrsList = TreeUtils.BuildMoveAttributesList(article.Tree, (int)attrsFlags);
             if ((attrsFlags & (int)MoveAttribute.COMMENT_AND_NAGS) != 0)
             {
@@ -240,6 +263,11 @@ namespace ChessForge
                 article.Tree.Header.SetHeaderValue(PgnHeaders.KEY_ANNOTATOR, "");
             }
 
+            if ((attrsFlags & (int)ArticleAttribute.PREAMBLE) != 0)
+            {
+                article.Tree.Header.SetPreamble("");
+            }
+
             return attrs;
         }
 
@@ -253,7 +281,7 @@ namespace ChessForge
         {
             ArticleAttributes articleAttrs = null;
 
-            if ((attrsFlags & (int)ArticleAttribute.ANNOTATOR) != 0)
+            if ((attrsFlags & ((int)ArticleAttribute.ANNOTATOR) | (int)ArticleAttribute.PREAMBLE) != 0)
             {
                 articleAttrs = new ArticleAttributes(article);
             }

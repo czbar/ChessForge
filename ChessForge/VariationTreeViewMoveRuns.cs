@@ -51,13 +51,13 @@ namespace ChessForge
         /// before this method was called.
         /// </summary>
         /// <param name="nd"></param>
-        public Inline InsertOrUpdateCommentRun(TreeNode nd)
+        public void InsertOrUpdateCommentRun(TreeNode nd)
         {
             Inline inlComment;
 
             if (nd == null)
             {
-                return null;
+                return;
             }
 
             try
@@ -69,7 +69,7 @@ namespace ChessForge
                 {
                     // something seriously wrong
                     AppLog.Message("ERROR: InsertOrUpdateCommentRun()- Run " + nd.NodeId.ToString() + " not found in _dictNodeToRun");
-                    return null;
+                    return;
                 }
 
                 // we are refreshing the move's text in case we have a change in NAG,
@@ -123,8 +123,6 @@ namespace ChessForge
             {
                 inlComment = null;
             }
-
-            return inlComment;
         }
 
         /// <summary>
@@ -134,13 +132,13 @@ namespace ChessForge
         /// diagram before move as well.
         /// </summary>
         /// <param name="nd"></param>
-        public Inline InsertOrUpdateCommentBeforeMoveRun(TreeNode nd, bool? includeNumber = null)
+        public void InsertOrUpdateCommentBeforeMoveRun(TreeNode nd, bool? includeNumber = null)
         {
             Inline inlCommentBeforeMove;
 
             if (nd == null)
             {
-                return null;
+                return;
             }
 
             try
@@ -152,7 +150,7 @@ namespace ChessForge
                 {
                     // something seriously wrong
                     AppLog.Message("ERROR: InsertOrUpdateCommentBeforeRun()- Run " + nd.NodeId.ToString() + " not found in _dictNodeToRun");
-                    return null;
+                    return;
                 }
 
                 Paragraph parentPara = rMove.Parent as Paragraph;
@@ -222,8 +220,6 @@ namespace ChessForge
             {
                 inlCommentBeforeMove = null;
             }
-
-            return inlCommentBeforeMove;
         }
 
         /// <summary>

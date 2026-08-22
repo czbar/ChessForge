@@ -290,6 +290,14 @@ namespace GameTree
                 {
                     nd.Comment = string.Empty;
                 }
+                if (!string.IsNullOrEmpty(nd.Arrows))
+                {
+                    nd.Arrows = string.Empty;
+                }
+                if (!string.IsNullOrEmpty(nd.Circles))
+                {
+                    nd.Circles = string.Empty;
+                }
                 if (!string.IsNullOrEmpty(nd.CommentBeforeMove))
                 {
                     nd.CommentBeforeMove = string.Empty;

@@ -1215,6 +1215,7 @@ namespace ChessForge
                 if (article != null)
                 {
                     article.Tree.Header.SetHeaderValue(PgnHeaders.KEY_ANNOTATOR, attrs.Annotator);
+                    article.Tree.Header.SetPreamble(attrs.Preamble);
                 }
             }
 

@@ -1316,7 +1316,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = gameIndex >= 0 && !isMate;
                                 break;
                             case "UiMnGameCreateExercise":
-                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0 && !isMate;
+                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId >= 0 && !isMate;
                                 break;
                             case "UiMnGameDeleteMovesFromHere":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;

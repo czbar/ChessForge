@@ -80,8 +80,16 @@ namespace ChessForge
 
             if (dlg.ShowDialog() == true && (dlg.MoveAttrsFlags != 0 || dlg.ArticleAttrsFlags != 0))
             {
-                CleanSidelinesComments.CleanLinesAndComments(dlg.Scope, dlg.MoveAttrsFlags, dlg.ArticleAttrsFlags,
-                                                             dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises);
+                bool anyDeleted = CleanSidelinesComments.CleanLinesAndComments(dlg.Scope, dlg.MoveAttrsFlags, dlg.ArticleAttrsFlags,
+                                                                               dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises);
+                if (anyDeleted)
+                {
+                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCleanupCompleted, CommentBox.HintType.INFO);
+                }
+                else
+                {
+                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCleanupNothingDone, CommentBox.HintType.ERROR);
+                }
             }
         }
 

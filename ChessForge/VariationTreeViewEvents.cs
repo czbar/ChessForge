@@ -285,8 +285,16 @@ namespace ChessForge
                 SelectRun(_dictNodeToRun[nd.NodeId], 1, MouseButton.Left);
                 if (e.ClickCount == 2 && _mainWin.InvokeAnnotationsDialog(nd))
                 {
-                    InsertOrUpdateCommentRun(nd);
-                    InsertOrUpdateCommentBeforeMoveRun(nd);
+                    if (nd.NodeId == 0)
+                    {
+                        // the move's paragraph may have been removed (due to being empty)
+                        BuildFlowDocumentForVariationTree(false);
+                    }
+                    else
+                    {
+                        InsertOrUpdateCommentRun(nd);
+                        InsertOrUpdateCommentBeforeMoveRun(nd);
+                    }
                 }
             }
         }

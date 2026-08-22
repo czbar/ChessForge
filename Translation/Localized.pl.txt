@@ -3217,10 +3217,22 @@ FlMsgNumberOfChaptersCreated=Liczba nowych rozdziałów
 #english: FlMsgVariantGamesSkipped=Chess variant games skipped (count=$0)
 FlMsgVariantGamesSkipped=Pominięto partie szachów niestandardowych (liczba
 
+#description: Flash message: cleanup notes and lines completed
+#english: FlMsgCleanupCompleted=Cleanup completed.
+FlMsgCleanupCompleted=Czyszczenie zakończone.
+
+#description: Flash message: no notes or lines to cleanup
+#english: FlMsgCleanupNothingDone=Found nothing to delete.
+FlMsgCleanupNothingDone=Nie znaleziono nic do wyczyszczenia.
+
 ##################################
 #
 # Header: MESSAGES
 #
+
+#description: Number of moves and articles affected by Cleanup
+#english: MsgAffectedItemsNo=Number of affected moves/items
+MsgAffectedItemsNo=Liczba zmienionych elementów
 
 #description: Bad Authorization Token
 #english: MsgBadAuthorizationToken=Bad Authorization Token
@@ -3285,7 +3297,6 @@ ErrLibraryDownload=Błąd Pobrania z Biblioteki
 #description: Bookmarks already exist
 #english: BookmarksAlreadyExist=Bookmarks already exist
 BookmarksAlreadyExist=Zakładki już istnieją
-
 
 #description: A bookmark has been added
 #english: BookmarkAdded=The bookmark has been added
