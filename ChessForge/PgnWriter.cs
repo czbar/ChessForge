@@ -134,8 +134,17 @@ namespace ChessForge
         {
             _fileText = new StringBuilder();
 
-            TreeNode dummyRoot = new TreeNode();
-            dummyRoot.Children.Add(nd);
+            TreeNode dummyRoot;
+            // if the first node is move 0, we don't want to print it.
+            if (nd.NodeId == 0)
+            {
+                dummyRoot = nd;
+            }
+            else
+            {
+                dummyRoot = new TreeNode();
+                dummyRoot.Children.Add(nd);
+            }
             return BuildTreeLineText(dummyRoot, moveNumberOffset, true);
         }
 
@@ -418,7 +427,7 @@ namespace ChessForge
                 }
 
                 // if the node has 1 child, print it,
-                // keep the same lavel and sublevel as the parent
+                // keep the same level and sublevel as the parent
                 // call this method on the child
                 if (nd.Children.Count == 1)
                 {
