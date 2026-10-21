@@ -33,3 +33,7 @@ Double click on c5 after 1.d4 in the Study, removes select background, leaving t
 Assign ECO in the current view, removes the highlight of the current line.
 
 Move to a different game in the current workbook, open a new one (and cancel a question to Save). Exit program and re-open. The place, the first workbook was closed is not saved.
+
+Implement SHIFT-LEFT CLICK when selecting multiple games
+
+Considering repeating lichess queries if "too many requestes" received.
