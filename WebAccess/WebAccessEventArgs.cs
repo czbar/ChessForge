@@ -20,6 +20,11 @@ namespace WebAccess
         public int ResponseCode { get; set; }
 
         /// <summary>
+        /// HResult of the exception if any exception was thrown during the event handling.
+        /// </summary>
+        public int HResult { get; set; }
+
+        /// <summary>
         /// Id of the tree to which the handled Node belongs
         /// </summary>
         public int TreeId { get; set; }
