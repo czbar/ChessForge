@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 
 namespace WebAccess
 {
@@ -7,16 +8,21 @@ namespace WebAccess
     /// </summary>
     public class RestApiRequest
     {
-        public const string UserAgentChesscom = "ChessForge/1.14 (contact robert.rozycki@gmail.com; czbar on chess.com)";
-        public const string UserAgentLichess = "ChessForge/1.14 (robert.rozycki@gmail.com)";
+        public const string UserAgentChesscom = "ChessForge/1.15 (contact robert.rozycki@gmail.com; czbar on chess.com)";
+        public const string UserAgentLichess = "ChessForge/1.15 (robert.rozycki@gmail.com)";
         public const string STATUS_CODE = "StatusCode:";
 
         static public HttpClient OpeningStatsClient = new HttpClient();
         static public HttpClient TablebaseClient = new HttpClient();
-        static public HttpClient GameImportClient = new HttpClient();
+        static public HttpClient GameImportClient = new HttpClient() { Timeout = TimeSpan.FromSeconds(100) };
 
         // Lichess API token, to be set by the user in the settings dialog. Required for making requests to lichess API.
         public static string LichessAuthToken = "";
+
+        /// <summary>
+        /// Minimum timeout in seconds for downloading games from lichess.
+        /// </summary>
+        public static int MIN_DOWNLOAD_TIMEOUT = 5;
 
         /// <summary>
         /// Number of retries to do if we get 429 Too Many Requests response from lichess API.
@@ -80,6 +86,24 @@ namespace WebAccess
             }
 
             return res;
+        }
+
+        /// <summary>
+        /// Gets the timeout in seconds for the game import requests.
+        /// </summary>
+        /// <returns></returns>
+        public static int GetGameImportTimeout()
+        {
+            return (int)GameImportClient.Timeout.TotalSeconds;
+        }
+
+        /// <summary>
+        /// Sets the timeout in seconds for the game import requests.
+        /// </summary>
+        /// <param name="sec"></param>
+        public static void SetGameImportTimeout(int sec)
+        {
+            GameImportClient.Timeout = TimeSpan.FromSeconds(sec);
         }
     }
 }
