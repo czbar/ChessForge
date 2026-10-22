@@ -19,6 +19,11 @@ namespace WebAccess
         public int MaxGames;
 
         /// <summary>
+        /// Timeout in seconds for the game import request.
+        /// </summary>
+        public int TimeoutSeconds = 100;
+
+        /// <summary>
         /// Whether StartDate and EndDate are UTC.
         /// True if UTC, false if local.
         /// </summary>
