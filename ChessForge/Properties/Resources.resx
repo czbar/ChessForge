@@ -438,36 +438,6 @@
   <data name="OpenView" xml:space="preserve">
     <value>Open View</value>
   </data>
-  <data name="Account" xml:space="preserve">
-    <value>Account</value>
-  </data>
-  <data name="Limits" xml:space="preserve">
-    <value>Limits</value>
-  </data>
-  <data name="Filter" xml:space="preserve">
-    <value>Filter</value>
-  </data>
-  <data name="NoMoreThan" xml:space="preserve">
-    <value>Max Games</value>
-  </data>
-  <data name="MostRecentGames" xml:space="preserve">
-    <value>Most Recent Games</value>
-  </data>
-  <data name="PerformDownload" xml:space="preserve">
-    <value>Download</value>
-  </data>
-  <data name="ApplyDate" xml:space="preserve">
-    <value>Apply Date</value>
-  </data>
-  <data name="StartDate" xml:space="preserve">
-    <value>Start Date</value>
-  </data>
-  <data name="EndDate" xml:space="preserve">
-    <value>End Date</value>
-  </data>
-  <data name="UtcDates" xml:space="preserve">
-    <value>Dates in UTC</value>
-  </data>
   <data name="Today" xml:space="preserve">
     <value>Today</value>
   </data>
@@ -1062,6 +1032,51 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   </data>
   <data name="AuthTokenInfo_3" xml:space="preserve">
     <value>Click "Create" at the bottom of the page. Copy the generated token, paste it below and click "OK".</value>
+  </data>
+  <data name="DownloadingFromLichess" xml:space="preserve">
+    <value>Downloading from lichess.org. Please wait...</value>
+  </data>
+  <data name="DownloadingFromChesscom" xml:space="preserve">
+    <value>Downloading from chess.com. Please wait...</value>
+  </data>
+  <data name="DownloadGamesFromWeb" xml:space="preserve">
+    <value>Download Games from a Web Site</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Limits" xml:space="preserve">
+    <value>Limits</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="NoMoreThan" xml:space="preserve">
+    <value>Max Games</value>
+  </data>
+  <data name="MostRecentGames" xml:space="preserve">
+    <value>Most Recent Games</value>
+  </data>
+  <data name="PerformDownload" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="ApplyDate" xml:space="preserve">
+    <value>Apply Date</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="UtcDates" xml:space="preserve">
+    <value>Dates in UTC</value>
+  </data>
+  <data name="Timeout" xml:space="preserve">
+    <value>Timeout (s)</value>
+  </data>
+  <data name="TimeoutAdvice" xml:space="preserve">
+    <value>The request has timed out. Consider increasing the timeout and trying again.</value>
   </data>
   <data name="DlgBlunderDetection" xml:space="preserve">
     <value>Bad Move Detection</value>
@@ -2563,15 +2578,6 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   </data>
   <data name="MsgDuplicateLichessImport" xml:space="preserve">
     <value>This game is already present in the current chapter. Import a second copy?</value>
-  </data>
-  <data name="DownloadingFromLichess" xml:space="preserve">
-    <value>Downloading from lichess.org. Please wait...</value>
-  </data>
-  <data name="DownloadingFromChesscom" xml:space="preserve">
-    <value>Downloading from chess.com. Please wait...</value>
-  </data>
-  <data name="DownloadGamesFromWeb" xml:space="preserve">
-    <value>Download Games from a Web Site</value>
   </data>
   <data name="DownloadedGamesAndExercises" xml:space="preserve">
     <value>Game count $0, Exercise count $1</value>

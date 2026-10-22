@@ -449,47 +449,6 @@ References=
 #english: OpenView=Open View
 OpenView=
 
-#description: Account
-#english: Account=Account
-Account=
-
-#description: Limits
-#english: Limits=Limits
-Limits=
-
-#description: Filter
-#english: Filter=Filter
-Filter=
-
-#description: No more than
-#english: NoMoreThan=Max Games
-NoMoreThan=
-
-#description: Most recent games only
-#english: MostRecentGames=Most Recent Games
-MostRecentGames=
-
-#description: Perform download
-#english: PerformDownload=Download
-PerformDownload=
-
-#description: Apply date
-#english: ApplyDate=Apply Date
-ApplyDate=
-
-#description: Start date
-#english: StartDate=Start Date
-StartDate=
-
-#description: End date
-#english: EndDate=End Date
-EndDate=
-
-#description: UTC dates
-#english: UtcDates=Dates in UTC
-UtcDates=
-
-
 #description: Today
 #english: Today=Today
 Today=
@@ -1426,6 +1385,72 @@ AuthTokenInfo_2=
 #description: Auth token info 3
 #english: AuthTokenInfo_3=Click "Create" at the bottom of the page. Copy the generated token, paste it below and click "OK".
 AuthTokenInfo_3=
+
+
+#######################################
+#
+# Header: DIALOG Download Games
+#
+
+#description: Downloading games from lichess
+#english: DownloadingFromLichess=Downloading from lichess.org. Please wait...
+DownloadingFromLichess=
+
+#description: Downloading games from Chesscom
+#english: DownloadingFromChesscom=Downloading from chess.com. Please wait...
+DownloadingFromChesscom=
+
+#description: Download Games From Web
+#english: DownloadGamesFromWeb=Download Games from a Web Site
+DownloadGamesFromWeb=
+
+#description: Account
+#english: Account=Account
+Account=
+
+#description: Limits
+#english: Limits=Limits
+Limits=
+
+#description: Filter
+#english: Filter=Filter
+Filter=
+
+#description: No more than
+#english: NoMoreThan=Max Games
+NoMoreThan=
+
+#description: Most recent games only
+#english: MostRecentGames=Most Recent Games
+MostRecentGames=
+
+#description: Perform download
+#english: PerformDownload=Download
+PerformDownload=
+
+#description: Apply date
+#english: ApplyDate=Apply Date
+ApplyDate=
+
+#description: Start date
+#english: StartDate=Start Date
+StartDate=
+
+#description: End date
+#english: EndDate=End Date
+EndDate=
+
+#description: UTC dates
+#english: UtcDates=Dates in UTC
+UtcDates=
+
+#description: Timeout
+#english: Timeout=Timeout (s)
+Timeout=
+
+#description: Timeout error and advices
+#english: TimeoutAdvice=The request has timed out. Consider increasing the timeout and trying again.
+TimeoutAdvice=
 
 
 #######################################
@@ -3695,18 +3720,6 @@ DownloadingGameFromLichess=
 #english: MsgDuplicateLichessImport=This game is already present in the current chapter. Import a second copy?
 MsgDuplicateLichessImport=
 
-
-#description: Downloading games from lichess
-#english: DownloadingFromLichess=Downloading from lichess.org. Please wait...
-DownloadingFromLichess=
-
-#description: Downloading games from Chesscom
-#english: DownloadingFromChesscom=Downloading from chess.com. Please wait...
-DownloadingFromChesscom=
-
-#description: Download Games From Web
-#english: DownloadGamesFromWeb=Download Games from a Web Site
-DownloadGamesFromWeb=
 
 #description: Downloaded Games And Exercises
 #english: DownloadedGamesAndExercises=Game count $0, Exercise count $1
