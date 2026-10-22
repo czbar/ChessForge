@@ -1,11 +1,6 @@
 ﻿using ChessPosition;
 using GameTree;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ChessForge
@@ -15,9 +10,6 @@ namespace ChessForge
     /// </summary>
     public class DownloadWebGamesManager
     {
-        // max number of games to download
-        public static int MAX_DOWNLOAD_GAME_COUNT = 10000;
-
         /// <summary>
         /// Invokes the dialog for requesting the download.
         /// Manages the return set of games.
