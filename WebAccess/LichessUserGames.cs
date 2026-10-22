@@ -33,6 +33,9 @@ namespace WebAccess
             {
                 string url = BuildLichessUserGamesUrl(filter);
                 HttpClient httpClient = RestApiRequest.GameImportClient;
+                // sanity check for timeout value. Make MIN_DOWNLOAD_TIMEOUT seconds the minimum.
+                filter.TimeoutSeconds = Math.Max(filter.TimeoutSeconds, RestApiRequest.MIN_DOWNLOAD_TIMEOUT);
+                httpClient.Timeout = TimeSpan.FromSeconds(filter.TimeoutSeconds);
                 RestApiRequest.SetHttpClientLichessDefaultHeaders(httpClient);
 
                 var response = await httpClient.GetAsync(url);
@@ -66,6 +69,7 @@ namespace WebAccess
             catch (Exception ex)
             {
                 eventArgs.Success = false;
+                eventArgs.HResult = ex.HResult;
                 eventArgs.Message = ex.Message;
                 UserGamesReceived?.Invoke(null, eventArgs);
                 return "";
@@ -86,7 +90,7 @@ namespace WebAccess
 
             // TODO: for now we are downloading all games and then filtering out variant games on client side, but if lichess ever adds a REST parameter to exclude variant games, we should use it to avoid downloading unnecessary data. 
             // Setting _perfTypeParameter seems to block the download when lichess experiencing problems with their database.
-            
+
             //url.Append("?" + _perfTypeParameter);
             //hasParam = true;
 
