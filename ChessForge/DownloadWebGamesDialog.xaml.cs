@@ -48,6 +48,7 @@ namespace ChessForge
                 UiCmbSite.SelectedItem = Constants.LichessNameId;
             }
 
+            UiTbTimeout.Text = Configuration.WebGamesTimeout.ToString();
             SetUserName();
         }
 
@@ -133,7 +134,16 @@ namespace ChessForge
                 }
                 else
                 {
-                    MessageBox.Show(Properties.Resources.GameDownloadError + ": " + e.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                    string msg = "";
+                    if (e.HResult == -2146233029)
+                    {
+                        msg = Properties.Resources.TimeoutAdvice;
+                    }
+                    else
+                    {
+                        msg = Properties.Resources.GameDownloadError + ": " + e.Message;
+                    }
+                    MessageBox.Show(msg, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
@@ -208,6 +218,9 @@ namespace ChessForge
             {
                 UiTbMaxGames.Text = Configuration.WebGamesMaxCount.ToString();
             }
+
+            Configuration.WebGamesTimeout = Math.Max(Configuration.WebGamesTimeout, RestApiRequest.MIN_DOWNLOAD_TIMEOUT);
+            UiTbTimeout.Text = Configuration.WebGamesTimeout.ToString();
 
             EnableDateControls(!Configuration.WebGamesMostRecent);
             UiCbOnlyNew.IsChecked = Configuration.WebGamesMostRecent;
@@ -308,9 +321,9 @@ namespace ChessForge
 
                     int gameCount;
                     int.TryParse(UiTbMaxGames.Text, out gameCount);
-                    if (gameCount <= 0)
+                    if (gameCount < 0)
                     {
-                        gameCount = DownloadWebGamesManager.MAX_DOWNLOAD_GAME_COUNT;
+                        gameCount = 0;
                     }
                     filter.MaxGames = gameCount;
 
@@ -327,7 +340,7 @@ namespace ChessForge
                         VerifyDatesInFilter(filter);
                     }
                     filter.IsUtcTimes = UiCbUtc.IsChecked == true;
-
+                    filter.TimeoutSeconds = int.TryParse(UiTbTimeout.Text, out int timeout) ? timeout : 0;
                     if (IsChesscomDownload())
                     {
                         _ = WebAccess.ChesscomUserGames.GetChesscomUserGames(filter);
@@ -392,6 +405,7 @@ namespace ChessForge
             }
 
             int.TryParse(UiTbMaxGames.Text, out Configuration.WebGamesMaxCount);
+            int.TryParse(UiTbTimeout.Text, out Configuration.WebGamesTimeout);
 
             Configuration.WebGamesMostRecent = UiCbOnlyNew.IsChecked == true;
             Configuration.WebGamesStartDate = UiDtStartDate.SelectedDate;
@@ -514,7 +528,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Importing-Data-into-Chess-Forge#downloading-games-of-a-player-from-lichess-or-chesscom");        
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Importing-Data-into-Chess-Forge#downloading-games-of-a-player-from-lichess-or-chesscom");
         }
     }
 }

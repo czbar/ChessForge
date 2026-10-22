@@ -37,6 +37,9 @@
                 <CheckBox x:Name="UiCbUtc" Content="{x:Static p:Resources.UtcDates}" Margin="130, 5, 30, 0"/>
             </StackPanel>
         </GroupBox>
+        <GroupBox x:Name="UiGbTimeout" Header="{x:Static p:Resources.Timeout}" Margin="358,240,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" Width="100">
+            <TextBox x:Name="UiTbTimeout" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap" Text="" Width="60"/>
+        </GroupBox>
 
     </Grid>
 </Window>
