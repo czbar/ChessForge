@@ -32,10 +32,16 @@ namespace WebAccess
             try
             {
                 string url = BuildLichessUserGamesUrl(filter);
-                HttpClient httpClient = RestApiRequest.GameImportClient;
                 // sanity check for timeout value. Make MIN_DOWNLOAD_TIMEOUT seconds the minimum.
                 filter.TimeoutSeconds = Math.Max(filter.TimeoutSeconds, RestApiRequest.MIN_DOWNLOAD_TIMEOUT);
-                httpClient.Timeout = TimeSpan.FromSeconds(filter.TimeoutSeconds);
+
+                if (RestApiRequest.GameImportClient.Timeout != TimeSpan.FromSeconds(filter.TimeoutSeconds))
+                {
+                    // when changing properties, a new instance must be created!
+                    RestApiRequest.GameImportClient = new HttpClient() { Timeout = TimeSpan.FromSeconds(filter.TimeoutSeconds) };
+                }
+
+                HttpClient httpClient = RestApiRequest.GameImportClient;
                 RestApiRequest.SetHttpClientLichessDefaultHeaders(httpClient);
 
                 var response = await httpClient.GetAsync(url);
