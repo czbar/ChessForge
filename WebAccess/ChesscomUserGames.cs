@@ -33,6 +33,13 @@ namespace WebAccess
             eventArgs.GameData = new List<GameData>();
             try
             {
+                if (RestApiRequest.GameImportClient.Timeout != TimeSpan.FromSeconds(RestApiRequest.DEFAULT_DOWNLOAD_TIMEOUT))
+                {
+                    // when changing properties, a new instance must be created!
+                    // for chess.com we just restore the default
+                    RestApiRequest.GameImportClient = new HttpClient() { Timeout = TimeSpan.FromSeconds(RestApiRequest.DEFAULT_DOWNLOAD_TIMEOUT) };
+                }
+
                 // STAGE 1: get list of possible archives
                 List<string> urlArchivesList = null;
                 string urlArchivesCommand = GetArchiveListUrl(filter.User);
@@ -98,7 +105,8 @@ namespace WebAccess
                 // remove games out of date range before checking the count!
                 games = GameUtils.RemoveGamesOutOfDateRange(games, filter.StartDateEpochTicks, filter.EndDateEpochTicks);
                 downloadedCount += newGames.Count;
-                if (downloadedCount >= filter.MaxGames)
+                // if MaxGames==0, we impose no restriction
+                if (filter.MaxGames > 0 && downloadedCount >= filter.MaxGames)
                 {
                     break;
                 }
