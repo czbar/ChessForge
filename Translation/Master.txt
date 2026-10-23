@@ -1132,6 +1132,8 @@ Timeout=Timeout (s)
 #Timeout error and advices
 TimeoutAdvice=The request has timed out. Consider increasing the timeout and trying again.
 
+#Timeout value too small
+TimeoutTooShort=The timeout value is invalid. It will be reset to the required minimum of $0 seconds.
 
 #######################################
 #

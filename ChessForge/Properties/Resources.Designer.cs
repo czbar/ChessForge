@@ -8126,6 +8126,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The timeout value is invalid. It will be reset to the required minimum $0 seconds..
+        /// </summary>
+        public static string TimeoutTooShort {
+            get {
+                return ResourceManager.GetString("TimeoutTooShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time Remaining.
         /// </summary>
         public static string TimeRemainig {

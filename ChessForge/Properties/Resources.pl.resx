@@ -1078,6 +1078,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   <data name="TimeoutAdvice" xml:space="preserve">
     <value>Przekroczono limit czasu żądania. Rozważ zwiększenie limitu czasu i ponowienie próby.</value>
   </data>
+  <data name="TimeoutTooShort" xml:space="preserve">
+    <value>Niewłaściwy limit czasu. Zostanie zmieniony na wymagane minimum $0 sekund.</value>
+  </data>
   <data name="DlgBlunderDetection" xml:space="preserve">
     <value>Detekcja Słabych Posunięć</value>
   </data>

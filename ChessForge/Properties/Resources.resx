@@ -1078,6 +1078,9 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   <data name="TimeoutAdvice" xml:space="preserve">
     <value>The request has timed out. Consider increasing the timeout and trying again.</value>
   </data>
+  <data name="TimeoutTooShort" xml:space="preserve">
+    <value>The timeout value is invalid. It will be reset to the required minimum of $0 seconds.</value>
+  </data>
   <data name="DlgBlunderDetection" xml:space="preserve">
     <value>Bad Move Detection</value>
   </data>

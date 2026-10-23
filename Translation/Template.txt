@@ -1452,6 +1452,9 @@ Timeout=
 #english: TimeoutAdvice=The request has timed out. Consider increasing the timeout and trying again.
 TimeoutAdvice=
 
+#description: Timeout value too small
+#english: TimeoutTooShort=The timeout value is invalid. It will be reset to the required minimum of $0 seconds.
+TimeoutTooShort=
 
 #######################################
 #
