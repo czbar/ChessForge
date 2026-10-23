@@ -334,11 +334,25 @@ namespace ChessForge
             {
                 try
                 {
+                    GamesFilter filter = new GamesFilter();
+                    filter.User = UiTbUserName.Text;
+
+                    int timeout = 0;
+                    filter.TimeoutSeconds = int.TryParse(UiTbTimeout.Text, out timeout) ? timeout : 0;
+
+                    if (timeout < RestApiRequest.MIN_DOWNLOAD_TIMEOUT) 
+                    {
+                        string msg = Properties.Resources.TimeoutTooShort;
+                        msg = msg.Replace("$0", RestApiRequest.MIN_DOWNLOAD_TIMEOUT.ToString());
+                        MessageBox.Show(msg, Properties.Resources.PromptCorrectData, MessageBoxButton.OK, MessageBoxImage.Information);
+                        
+                        filter.TimeoutSeconds = RestApiRequest.MIN_DOWNLOAD_TIMEOUT;
+                        UiTbTimeout.Text = RestApiRequest.MIN_DOWNLOAD_TIMEOUT.ToString();
+                    }
+
                     UpdateConfiguration();
 
                     EnableControls(true);
-                    GamesFilter filter = new GamesFilter();
-                    filter.User = UiTbUserName.Text;
 
                     int gameCount;
                     int.TryParse(UiTbMaxGames.Text, out gameCount);
@@ -361,7 +375,6 @@ namespace ChessForge
                         VerifyDatesInFilter(filter);
                     }
                     filter.IsUtcTimes = UiCbUtc.IsChecked == true;
-                    filter.TimeoutSeconds = int.TryParse(UiTbTimeout.Text, out int timeout) ? timeout : 0;
                     if (IsChesscomSelected())
                     {
                         _ = WebAccess.ChesscomUserGames.GetChesscomUserGames(filter);
