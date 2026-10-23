@@ -20,6 +20,11 @@ namespace WebAccess
         public static string LichessAuthToken = "";
 
         /// <summary>
+        /// Default timeout in seconds for downloading games.
+        /// </summary>
+        public static int DEFAULT_DOWNLOAD_TIMEOUT = 100;
+
+        /// <summary>
         /// Minimum timeout in seconds for downloading games from lichess.
         /// </summary>
         public static int MIN_DOWNLOAD_TIMEOUT = 5;
