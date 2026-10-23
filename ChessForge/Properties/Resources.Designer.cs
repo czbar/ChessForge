@@ -8108,6 +8108,33 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Timeout (s).
+        /// </summary>
+        public static string Timeout {
+            get {
+                return ResourceManager.GetString("Timeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The request has timed out. Consider increasing the timeout and trying again..
+        /// </summary>
+        public static string TimeoutAdvice {
+            get {
+                return ResourceManager.GetString("TimeoutAdvice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The timeout value is invalid. It will be reset to the required minimum $0 seconds..
+        /// </summary>
+        public static string TimeoutTooShort {
+            get {
+                return ResourceManager.GetString("TimeoutTooShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time Remaining.
         /// </summary>
         public static string TimeRemainig {

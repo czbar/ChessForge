@@ -525,6 +525,11 @@ namespace ChessForge
         public static int WebGamesMaxCount = 50;
 
         /// <summary>
+        /// Timeout for the web requests to download games from lichess or chess.com
+        /// </summary>
+        public static int WebGamesTimeout = 100;
+
+        /// <summary>
         /// Whether to download the most recent games 
         /// or use specified dates.
         /// </summary>
@@ -931,6 +936,7 @@ namespace ChessForge
         private const string CFG_LAST_VERSION_CHECK = "LastVersionCheckDate";
         private const string CFG_WG_CHESSCOM_USER = "WebGamesChessComUser";
         private const string CFG_WG_MAX_GAMES = "WebGamesMaxCount";
+        private const string CFG_WG_TIMEOUT = "WebGamesTimeout";
         private const string CFG_WG_MOST_RECENT = "WebGamesMostRecent";
         private const string CFG_WG_START_DATE = "WebGamesStartDate";
         private const string CFG_WG_END_DATE = "WebGamesEndDate";
@@ -1140,6 +1146,7 @@ namespace ChessForge
                 sb.AppendLine(CFG_LAST_VERSION_CHECK + "=" + LastVersionCheckDate);
                 sb.AppendLine(CFG_WG_CHESSCOM_USER + "=" + WebGamesChesscomUser);
                 sb.AppendLine(CFG_WG_MAX_GAMES + "=" + WebGamesMaxCount);
+                sb.AppendLine(CFG_WG_TIMEOUT + "=" + WebGamesTimeout);
                 sb.AppendLine(CFG_WG_MOST_RECENT + "=" + (WebGamesMostRecent ? "1" : "0"));
                 sb.AppendLine(CFG_WG_START_DATE + "=" + WebGamesStartDate);
                 sb.AppendLine(CFG_WG_END_DATE + "=" + WebGamesEndDate);
@@ -1637,6 +1644,9 @@ namespace ChessForge
                             break;
                         case CFG_WG_MAX_GAMES:
                             int.TryParse(value, out WebGamesMaxCount);
+                            break;
+                        case CFG_WG_TIMEOUT:
+                            int.TryParse(value, out WebGamesTimeout);
                             break;
                         case CFG_WG_MOST_RECENT:
                             WebGamesMostRecent = value != "0" ? true : false;

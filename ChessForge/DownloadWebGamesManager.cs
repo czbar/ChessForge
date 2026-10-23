@@ -1,12 +1,8 @@
 ﻿using ChessPosition;
 using GameTree;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -15,9 +11,6 @@ namespace ChessForge
     /// </summary>
     public class DownloadWebGamesManager
     {
-        // max number of games to download
-        public static int MAX_DOWNLOAD_GAME_COUNT = 1000;
-
         /// <summary>
         /// Invokes the dialog for requesting the download.
         /// Manages the return set of games.
@@ -39,17 +32,27 @@ namespace ChessForge
                     DownloadedGamesActionDialog.Action action = SelectSaveOption(selected, out buildRepertoireChapters);
                     if (action != DownloadedGamesActionDialog.Action.None)
                     {
-                        switch (action)
+                        try
                         {
-                            case DownloadedGamesActionDialog.Action.CurrentChapter:
-                                AddGamesToCurrentChapter(dlg.Games, out gameCount, out exerciseCount, null, true);
-                                break;
-                            case DownloadedGamesActionDialog.Action.NewChapter:
-                                AddGamesToNewChapter(dlg.Games, dlg.UserNick, buildRepertoireChapters, true, out gameCount, out exerciseCount);
-                                break;
-                            case DownloadedGamesActionDialog.Action.NewWorkbook:
-                                AddGamesToNewWorkbook(dlg.Games, dlg.UserNick, buildRepertoireChapters, out gameCount, out exerciseCount);
-                                break;
+                            Mouse.SetCursor(Cursors.Wait);
+
+                            switch (action)
+                            {
+                                case DownloadedGamesActionDialog.Action.CurrentChapter:
+                                    AddGamesToCurrentChapter(dlg.Games, out gameCount, out exerciseCount, null, true);
+                                    break;
+                                case DownloadedGamesActionDialog.Action.NewChapter:
+                                    AddGamesToNewChapter(dlg.Games, dlg.UserNick, buildRepertoireChapters, true, out gameCount, out exerciseCount);
+                                    break;
+                                case DownloadedGamesActionDialog.Action.NewWorkbook:
+                                    AddGamesToNewWorkbook(dlg.Games, dlg.UserNick, buildRepertoireChapters, out gameCount, out exerciseCount);
+                                    break;
+                            }
+                        }
+                        catch { }
+                        finally
+                        {
+                            Mouse.SetCursor(Cursors.Arrow);
                         }
 
                         if (exerciseCount > 0)

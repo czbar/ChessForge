@@ -342,37 +342,6 @@ References=References
 #Open a view
 OpenView=Open View
 
-#Account
-Account=Account
-
-#Limits
-Limits=Limits
-
-#Filter
-Filter=Filter
-
-#No more than
-NoMoreThan=Max Games
-
-#Most recent games only
-MostRecentGames=Most Recent Games
-
-#Perform download
-PerformDownload=Download
-
-#Apply date
-ApplyDate=Apply Date
-
-#Start date
-StartDate=Start Date
-
-#End date
-EndDate=End Date
-
-#UTC dates
-UtcDates=Dates in UTC
-
-
 #Today
 Today=Today
 
@@ -1112,6 +1081,59 @@ AuthTokenInfo_2=To create the token, navigate to
 #Auth token info 3
 AuthTokenInfo_3=Click "Create" at the bottom of the page. Copy the generated token, paste it below and click "OK".
 
+
+#######################################
+#
+# Header: DIALOG Download Games
+#
+
+#Downloading games from lichess
+DownloadingFromLichess=Downloading from lichess.org. Please wait...
+
+#Downloading games from Chesscom
+DownloadingFromChesscom=Downloading from chess.com. Please wait...
+
+#Download Games From Web
+DownloadGamesFromWeb=Download Games from a Web Site
+
+#Account
+Account=Account
+
+#Limits
+Limits=Limits
+
+#Filter
+Filter=Filter
+
+#No more than
+NoMoreThan=Max Games
+
+#Most recent games only
+MostRecentGames=Most Recent Games
+
+#Perform download
+PerformDownload=Download
+
+#Apply date
+ApplyDate=Apply Date
+
+#Start date
+StartDate=Start Date
+
+#End date
+EndDate=End Date
+
+#UTC dates
+UtcDates=Dates in UTC
+
+#Timeout
+Timeout=Timeout (s)
+
+#Timeout error and advices
+TimeoutAdvice=The request has timed out. Consider increasing the timeout and trying again.
+
+#Timeout value too small
+TimeoutTooShort=The timeout value is invalid. It will be reset to the required minimum of $0 seconds.
 
 #######################################
 #
@@ -2880,15 +2902,6 @@ DownloadingGameFromLichess=Downloading Game from lichess.org. Please wait...
 #Duplicate Lichess import
 MsgDuplicateLichessImport=This game is already present in the current chapter. Import a second copy?
 
-
-#Downloading games from lichess
-DownloadingFromLichess=Downloading from lichess.org. Please wait...
-
-#Downloading games from Chesscom
-DownloadingFromChesscom=Downloading from chess.com. Please wait...
-
-#Download Games From Web
-DownloadGamesFromWeb=Download Games from a Web Site
 
 #Downloaded Games And Exercises
 DownloadedGamesAndExercises=Game count $0, Exercise count $1

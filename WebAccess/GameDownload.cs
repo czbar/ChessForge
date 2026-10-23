@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace WebAccess
@@ -59,7 +60,11 @@ namespace WebAccess
                 }
                 else
                 {
-                    var response = await RestApiRequest.GameImportClient.GetAsync(UrlTarget.LichessGameDownload + gameId);
+                    string url = UrlTarget.LichessGameDownload + gameId;
+                    HttpClient httpClient = RestApiRequest.GameImportClient;
+                    RestApiRequest.SetHttpClientLichessDefaultHeaders(httpClient);
+
+                    var response = await httpClient.GetAsync(url);                 
                     using (var fs = new MemoryStream())
                     {
                         await response.Content.CopyToAsync(fs);

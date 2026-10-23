@@ -79,6 +79,7 @@ namespace GameTree
                         break;
                     case EditOperation.EditType.ADD_MOVE:
                         _owningTree.UndoAddMove(op.Node);
+                        _owningTree.BuildLines();
                         selectedNodeId= op.Node.Parent.NodeId;
                         selectedLineId= op.Node.Parent.LineId;
                         break;
