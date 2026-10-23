@@ -49,6 +49,8 @@ namespace ChessForge
             }
 
             UiTbTimeout.Text = Configuration.WebGamesTimeout.ToString();
+
+            SetTimeoutVisibility();
             SetUserName();
         }
 
@@ -135,7 +137,8 @@ namespace ChessForge
                 else
                 {
                     string msg = "";
-                    if (e.HResult == -2146233029)
+                    // if we are connecting to lichess and timeout occured produce the advice.
+                    if (IsLichessSelected() && e.HResult == -2146233029)
                     {
                         msg = Properties.Resources.TimeoutAdvice;
                     }
@@ -195,7 +198,7 @@ namespace ChessForge
         /// </summary>
         private void SetUserName()
         {
-            if ((string)UiCmbSite.SelectedItem == Constants.ChesscomNameId)
+            if (IsChesscomSelected())
             {
                 UiTbUserName.Text = Configuration.WebGamesChesscomUser;
             }
@@ -226,6 +229,24 @@ namespace ChessForge
             UiCbOnlyNew.IsChecked = Configuration.WebGamesMostRecent;
 
             SetDatesValues();
+        }
+
+        /// <summary>
+        /// Shows or hides the timeout control.
+        /// It is applicable to lichess only. 
+        /// </summary>
+        private void SetTimeoutVisibility()
+        {
+            if (IsLichessSelected())
+            {
+                UiTbTimeout.Visibility = Visibility.Visible;
+                UiGbTimeout.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                UiTbTimeout.Visibility = Visibility.Collapsed;
+                UiGbTimeout.Visibility = Visibility.Collapsed;
+            }
         }
 
         /// <summary>
@@ -275,7 +296,7 @@ namespace ChessForge
             UiLblLoading.Visibility = isDownloading ? Visibility.Visible : Visibility.Collapsed;
             if (isDownloading)
             {
-                if (IsChesscomDownload())
+                if (IsChesscomSelected())
                 {
                     UiLblLoading.Content = Properties.Resources.DownloadingFromChesscom;
                 }
@@ -341,7 +362,7 @@ namespace ChessForge
                     }
                     filter.IsUtcTimes = UiCbUtc.IsChecked == true;
                     filter.TimeoutSeconds = int.TryParse(UiTbTimeout.Text, out int timeout) ? timeout : 0;
-                    if (IsChesscomDownload())
+                    if (IsChesscomSelected())
                     {
                         _ = WebAccess.ChesscomUserGames.GetChesscomUserGames(filter);
                     }
@@ -380,13 +401,23 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Checks the Site combobox selection to determine which site we are downloading from.
+        /// Determine if the chess.com site is currently selected.
         /// </summary>
         /// <returns></returns>
-        private bool IsChesscomDownload()
+        private bool IsChesscomSelected()
         {
             return (string)UiCmbSite.SelectedItem == Constants.ChesscomNameId;
         }
+
+        /// <summary>
+        /// Determine if the lichess site is currently selected.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsLichessSelected()
+        {
+            return (string)UiCmbSite.SelectedItem == Constants.LichessNameId;
+        }
+
 
         /// <summary>
         /// Update WebGames configuaration items.
@@ -476,6 +507,7 @@ namespace ChessForge
         private void UiCmbSite_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SetUserName();
+            SetTimeoutVisibility();
         }
 
         /// <summary>
