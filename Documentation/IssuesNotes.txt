@@ -37,3 +37,5 @@ Move to a different game in the current workbook, open a new one (and cancel a q
 Implement SHIFT-LEFT CLICK when selecting multiple games
 
 Considering repeating lichess queries if "too many requestes" received.
+
+After F3 and Open View, navigation back does not work correctly.
