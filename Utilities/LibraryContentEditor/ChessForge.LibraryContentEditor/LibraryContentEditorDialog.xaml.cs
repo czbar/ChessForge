@@ -492,7 +492,7 @@ namespace ChessForge.LibraryContentEditor
             OpenFileDialog dialog = new OpenFileDialog
             {
                 Title = "Open ChessForge library content",
-                Filter = "Library content (LibraryContent.txt)|LibraryContent.txt|Text files (*.txt)|*.txt|All files (*.*)|*.*",
+                Filter = "Library content files (*.txt)|*.txt|All files (*.*)|*.*",
                 CheckFileExists = true
             };
 
@@ -633,7 +633,7 @@ namespace ChessForge.LibraryContentEditor
             OpenFileDialog dialog = new OpenFileDialog
             {
                 Title = "Choose the book/workbook file",
-                Filter = "PGN and ChessForge files (*.pgn;*.workbook)|*.pgn;*.workbook|All files (*.*)|*.*",
+                Filter = "ChessForge workbooks (*.pgn)|*.pgn|All files (*.*)|*.*",
                 CheckFileExists = true
             };
 
@@ -644,10 +644,18 @@ namespace ChessForge.LibraryContentEditor
 
             if (dialog.ShowDialog(this) == true)
             {
-                book.FilePath = MakeDocumentRelativePath(dialog.FileName);
+                // in the Codex generated first version
+                // MakeDocumentRelativePath(dialog.FileName) as called here;
+                // Probably because Codex was given a sample Library.txt file with relative paths
+                book.FilePath = dialog.FileName;
             }
         }
 
+        /// <summary>
+        /// Converts an absolute file path to a relative path based on the current document's location.
+        /// </summary>
+        /// <param name="selectedPath"></param>
+        /// <returns></returns>
         private string MakeDocumentRelativePath(string selectedPath)
         {
             if (string.IsNullOrWhiteSpace(CurrentFilePath))
