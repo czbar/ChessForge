@@ -1,0 +1,169 @@
+<Window x:Class="ChessForge.LibraryContentEditor.LibraryContentEditorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ChessForge.LibraryContentEditor"
+        Title="Library Content Editor"
+        Width="1000"
+        Height="680"
+        MinWidth="760"
+        MinHeight="500"
+        WindowStartupLocation="CenterOwner"
+        Closing="Window_Closing">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New" Executed="New_Executed" />
+        <CommandBinding Command="ApplicationCommands.Open" Executed="Open_Executed" />
+        <CommandBinding Command="ApplicationCommands.Save" Executed="Save_Executed" />
+        <CommandBinding Command="ApplicationCommands.SaveAs" Executed="SaveAs_Executed" />
+        <CommandBinding Command="ApplicationCommands.Close" Executed="Close_Executed" />
+    </Window.CommandBindings>
+
+    <Window.Resources>
+        <HierarchicalDataTemplate DataType="{x:Type local:BookcaseNode}" ItemsSource="{Binding Shelves}">
+            <TextBlock Text="{Binding DisplayName}" />
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type local:ShelfNode}" ItemsSource="{Binding Books}">
+            <TextBlock Text="{Binding DisplayName}" />
+        </HierarchicalDataTemplate>
+        <DataTemplate DataType="{x:Type local:BookNode}">
+            <TextBlock Text="{Binding DisplayName}" />
+        </DataTemplate>
+
+        <Style x:Key="ToolbarButtonStyle" TargetType="Button">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Padding" Value="9,4" />
+            <Setter Property="MinWidth" Value="72" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="Margin" Value="0,3,0,12" />
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" Command="ApplicationCommands.New" InputGestureText="Ctrl+N" />
+                <MenuItem Header="_Open..." Command="ApplicationCommands.Open" InputGestureText="Ctrl+O" />
+                <Separator />
+                <MenuItem Header="_Save" Command="ApplicationCommands.Save" InputGestureText="Ctrl+S" />
+                <MenuItem Header="Save _As..." Command="ApplicationCommands.SaveAs" InputGestureText="Ctrl+Shift+S" />
+                <Separator />
+                <MenuItem Header="_Close" Command="ApplicationCommands.Close" InputGestureText="Alt+F4" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="Add _Bookcase" Click="AddBookcase_Click" />
+                <MenuItem x:Name="AddShelfMenuItem" Header="Add _Shelf" Click="AddShelf_Click" />
+                <MenuItem x:Name="AddBookMenuItem" Header="Add B_ook" Click="AddBook_Click" />
+                <Separator />
+                <MenuItem x:Name="MoveUpMenuItem" Header="Move _Up" Click="MoveUp_Click" />
+                <MenuItem x:Name="MoveDownMenuItem" Header="Move _Down" Click="MoveDown_Click" />
+                <MenuItem x:Name="DeleteMenuItem" Header="_Delete" Click="Delete_Click" />
+            </MenuItem>
+            <MenuItem Header="_Tools">
+                <MenuItem Header="_Validate document" Click="Validate_Click" />
+            </MenuItem>
+        </Menu>
+
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Command="ApplicationCommands.New" Style="{StaticResource ToolbarButtonStyle}" Content="New" />
+                <Button Command="ApplicationCommands.Open" Style="{StaticResource ToolbarButtonStyle}" Content="Open..." />
+                <Button Command="ApplicationCommands.Save" Style="{StaticResource ToolbarButtonStyle}" Content="Save" />
+                <Separator />
+                <Button Click="AddBookcase_Click" Style="{StaticResource ToolbarButtonStyle}" Content="+ Bookcase" />
+                <Button x:Name="AddShelfButton" Click="AddShelf_Click" Style="{StaticResource ToolbarButtonStyle}" Content="+ Shelf" />
+                <Button x:Name="AddBookButton" Click="AddBook_Click" Style="{StaticResource ToolbarButtonStyle}" Content="+ Book" />
+                <Button x:Name="DeleteButton" Click="Delete_Click" Style="{StaticResource ToolbarButtonStyle}" Content="Delete" />
+                <Separator />
+                <Button x:Name="MoveUpButton" Click="MoveUp_Click" Style="{StaticResource ToolbarButtonStyle}" Content="Move up" />
+                <Button x:Name="MoveDownButton" Click="MoveDown_Click" Style="{StaticResource ToolbarButtonStyle}" Content="Move down" />
+            </ToolBar>
+        </ToolBarTray>
+
+        <Border DockPanel.Dock="Bottom" BorderBrush="#D0D0D0" BorderThickness="0,1,0,0" Padding="10,8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="StatusTextBlock" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                <Button Grid.Column="1" Margin="8,0,0,0" Padding="18,6" Content="Save &amp; Close" IsDefault="True" Click="SaveAndClose_Click" />
+                <Button Grid.Column="2" Margin="8,0,0,0" Padding="18,6" Content="Close" IsCancel="True" Click="CloseButton_Click" />
+            </Grid>
+        </Border>
+
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" MinWidth="270" />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="3*" MinWidth="330" />
+            </Grid.ColumnDefinitions>
+
+            <Border BorderBrush="#B8B8B8" BorderThickness="1" CornerRadius="2">
+                <TreeView x:Name="LibraryTree"
+                          BorderThickness="0"
+                          Padding="5"
+                          SelectedItemChanged="LibraryTree_SelectedItemChanged">
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="TreeViewItem">
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                            <Setter Property="Padding" Value="2" />
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                </TreeView>
+            </Border>
+
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="Transparent" />
+
+            <Border Grid.Column="2" BorderBrush="#B8B8B8" BorderThickness="1" CornerRadius="2" Padding="16">
+                <Grid>
+                    <TextBlock x:Name="NoSelectionTextBlock"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="#666666"
+                               Text="Select an item in the hierarchy to edit it." />
+
+                    <ScrollViewer x:Name="PropertyEditor" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <TextBlock x:Name="NodeKindTextBlock" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,16" />
+
+                            <TextBlock Text="Name" FontWeight="SemiBold" />
+                            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock Text="Description" FontWeight="SemiBold" />
+                            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                                     MinHeight="70"
+                                     TextWrapping="Wrap"
+                                     VerticalContentAlignment="Top" />
+
+                            <Grid x:Name="FilePathEditor" Visibility="Collapsed">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="File" FontWeight="SemiBold" />
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Text="{Binding FilePath, UpdateSourceTrigger=PropertyChanged}"
+                                             ToolTip="Path written to LibraryContent.txt. Forward slashes are used when saving." />
+                                    <Button Grid.Column="1" Margin="7,3,0,12" Padding="12,4" Content="Browse..." Click="BrowseFile_Click" />
+                                </Grid>
+                            </Grid>
+
+                            <Border Margin="0,12,0,0" Padding="10" Background="#FFF8E1" BorderBrush="#FFE0A0" BorderThickness="1">
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="The file format stores each value on one line. Empty descriptions are allowed; the first sample shelf may also have an empty name." />
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+    </DockPanel>
+</Window>
+
